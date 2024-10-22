@@ -1,6 +1,7 @@
 package colorx
 
 import (
+	"encoding"
 	"errors"
 	"fmt"
 	"image/color"
@@ -8,15 +9,25 @@ import (
 	"strings"
 )
 
+var (
+	_ encoding.TextMarshaler   = &Hex{}
+	_ encoding.TextUnmarshaler = &Hex{}
+	_ fmt.Stringer             = &Hex{}
+)
+
+// Hex is a helper struct that wraps a color and satisfies
+// encoding.TextMarshaler, encoding.TextUnmarshaler, and fmt.Stringer.
 type Hex struct {
 	color.Color
 }
 
+// MarshalText encodes a color as hex.
 func (h *Hex) MarshalText() ([]byte, error) {
 	s := FormatHex(h.Color)
 	return []byte(s), nil
 }
 
+// UnmarshalText parses the given hex code.
 func (h *Hex) UnmarshalText(text []byte) error {
 	c, err := ParseHex(string(text))
 	if err != nil {
@@ -27,12 +38,15 @@ func (h *Hex) UnmarshalText(text []byte) error {
 	return nil
 }
 
+// MarshalText encodes a color as hex.
 func (h *Hex) String() string {
 	return FormatHex(h.Color)
 }
 
 var ErrInvalidLength = errors.New("hex code should be 4 or 7 characters")
 
+// ParseHex parses the given hex code as a color.NRGBA
+//
 //nolint:gosec
 func ParseHex(text string) (color.NRGBA, error) {
 	var c color.NRGBA
@@ -83,6 +97,8 @@ func ParseHex(text string) (color.NRGBA, error) {
 	return c, nil
 }
 
+// FormatHex formats the given color.Color as a hex code
+//
 //nolint:gosec
 func FormatHex(c color.Color) string {
 	var r, g, b, a uint8
