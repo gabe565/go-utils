@@ -1,24 +1,11 @@
 package coloryaml
 
 import (
-	"io"
-	"os"
 	"strconv"
 
 	"github.com/fatih/color"
 	"github.com/goccy/go-yaml/printer"
-	"github.com/mattn/go-isatty"
 )
-
-func shouldColor(w io.Writer) bool {
-	if os.Getenv("NO_COLOR") != "" || os.Getenv("TERM") == "dumb" {
-		return false
-	}
-	if f, ok := w.(*os.File); ok {
-		return isatty.IsTerminal(f.Fd()) || isatty.IsCygwinTerminal(f.Fd())
-	}
-	return false
-}
 
 const escape = "\x1b"
 
