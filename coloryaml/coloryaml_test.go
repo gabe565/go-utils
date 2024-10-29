@@ -1,9 +1,13 @@
 package coloryaml
 
 import (
+	"io"
+	"strings"
 	"testing"
 
+	"github.com/creack/pty"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestColorize(t *testing.T) {
@@ -29,4 +33,33 @@ func TestColorize(t *testing.T) {
 			assert.Equalf(t, tt.want, Colorize(tt.args.s), "Colorize(%v)", tt.args.s)
 		})
 	}
+}
+
+func TestWriteString(t *testing.T) {
+	t.Run("no color", func(t *testing.T) {
+		var buf strings.Builder
+		n, err := WriteString(&buf, `test: true`)
+		require.NoError(t, err)
+		assert.Equal(t, 11, n)
+		assert.Equal(t, "test: true\n", buf.String())
+	})
+
+	t.Run("color", func(t *testing.T) {
+		pty, tty, err := pty.Open()
+		require.NoError(t, err)
+		t.Cleanup(func() {
+			_ = pty.Close()
+			_ = tty.Close()
+		})
+
+		n, err := WriteString(pty, `test: true`)
+		require.NoError(t, err)
+		assert.Equal(t, 29, n)
+
+		b := make([]byte, n)
+		_, err = io.ReadFull(pty, b)
+		require.NoError(t, err)
+
+		assert.Equal(t, "^[[36mtest^[[0m:^[[95m true^[", string(b))
+	})
 }
