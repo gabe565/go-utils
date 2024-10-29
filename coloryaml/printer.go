@@ -65,5 +65,11 @@ func Printer() *printer.Printer {
 				Suffix: format(color.Reset),
 			}
 		},
+		Comment: func() *printer.Property {
+			return &printer.Property{
+				Prefix: format(color.FgHiBlack),
+				Suffix: format(color.Reset),
+			}
+		},
 	}
 }
