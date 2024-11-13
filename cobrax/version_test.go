@@ -24,6 +24,7 @@ func TestBuildUserAgent(t *testing.T) {
 		{"commit", args{commit: "deadbeef"}, "test/deadbeef" + osArch},
 		{"version and commit", args{version: "1.0.0", commit: "deadbeef"}, "test/v1.0.0-deadbeef" + osArch},
 		{"commit has changes", args{commit: "*deadbeef"}, "test/deadbeef" + osArch},
+		{"non-numeric version", args{version: "beta"}, "test/beta" + osArch},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

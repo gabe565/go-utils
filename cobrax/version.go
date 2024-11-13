@@ -54,7 +54,11 @@ func BuildUserAgent(cmd *cobra.Command) string {
 	ua := root.Name()
 	commit := strings.TrimPrefix(GetCommit(root), "*")
 	if version := GetVersion(root); version != "" {
-		ua += "/v" + version
+		if '0' <= version[0] && version[0] <= '9' {
+			ua += "/v" + version
+		} else {
+			ua += "/" + version
+		}
 		if commit != "" {
 			ua += "-" + commit
 		}
