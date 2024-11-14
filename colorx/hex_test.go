@@ -15,16 +15,16 @@ func TestParseHex(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		want    color.NRGBA
+		want    color.Color
 		wantErr require.ErrorAssertionFunc
 	}{
-		{"white", args{"#fff"}, color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, require.NoError},
-		{"black", args{"#000"}, color.NRGBA{A: 0xFF}, require.NoError},
+		{"white", args{"#fff"}, color.White, require.NoError},
+		{"black", args{"#000"}, color.Black, require.NoError},
 		{"red", args{"#f00"}, color.NRGBA{R: 0xFF, A: 0xFF}, require.NoError},
 		{"green", args{"#0f0"}, color.NRGBA{G: 0xFF, A: 0xFF}, require.NoError},
 		{"blue", args{"#00f"}, color.NRGBA{B: 0xFF, A: 0xFF}, require.NoError},
 		{"blue gray", args{"#607d8b"}, color.NRGBA{R: 0x60, G: 0x7D, B: 0x8B, A: 0xFF}, require.NoError},
-		{"missing prefix", args{"fff"}, color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}, require.NoError},
+		{"missing prefix", args{"fff"}, color.White, require.NoError},
 		{"short alpha", args{"#f00e"}, color.NRGBA{R: 0xFF, A: 0xEE}, require.NoError},
 		{"long alpha", args{"#00ff00ab"}, color.NRGBA{G: 0xFF, A: 0xAB}, require.NoError},
 		{"too long", args{"#fffffffff"}, color.NRGBA{}, require.Error},
@@ -48,8 +48,8 @@ func TestFormatHex(t *testing.T) {
 		fields fields
 		want   string
 	}{
-		{"white", fields{color.NRGBA{R: 0xFF, G: 0xFF, B: 0xFF, A: 0xFF}}, "#fff"},
-		{"black", fields{color.NRGBA{}}, "#0000"},
+		{"white", fields{color.White}, "#fff"},
+		{"black", fields{color.Black}, "#000"},
 		{"red", fields{color.NRGBA{R: 0xFF, A: 0xFF}}, "#f00"},
 		{"green", fields{color.NRGBA{G: 0xFF, A: 0xFF}}, "#0f0"},
 		{"blue", fields{color.NRGBA{B: 0xFF, A: 0xFF}}, "#00f"},

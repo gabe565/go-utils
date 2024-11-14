@@ -48,7 +48,7 @@ var ErrInvalidLength = errors.New("hex code should be 4 or 7 characters")
 // ParseHex parses the given hex code as a color.NRGBA
 //
 //nolint:gosec
-func ParseHex(text string) (color.NRGBA, error) {
+func ParseHex(text string) (color.Color, error) {
 	var c color.NRGBA
 	text = strings.TrimPrefix(text, "#")
 
@@ -93,6 +93,12 @@ func ParseHex(text string) (color.NRGBA, error) {
 		c.R = uint8(parsed & 0xFF)
 	default:
 		return c, ErrInvalidLength
+	}
+
+	if c.R == c.G && c.G == c.B && c.A == 0xFF {
+		y := uint16(c.R)
+		y |= y << 8
+		return color.Gray16{Y: y}, nil
 	}
 	return c, nil
 }
