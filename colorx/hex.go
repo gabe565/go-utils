@@ -43,23 +43,23 @@ func (h *Hex) String() string {
 	return FormatHex(h.Color)
 }
 
-var ErrInvalidLength = errors.New("hex code should be 4 or 7 characters")
+var ErrInvalidLength = errors.New("invalid length")
 
 // ParseHex parses the given hex code as a color.NRGBA
 //
 //nolint:gosec
 func ParseHex(text string) (color.Color, error) {
 	var c color.NRGBA
-	text = strings.TrimPrefix(text, "#")
+	trimmed := strings.TrimPrefix(text, "#")
 
-	switch len(text) {
+	switch len(trimmed) {
 	case 3, 4:
-		parsed, err := strconv.ParseUint(text, 16, 16)
+		parsed, err := strconv.ParseUint(trimmed, 16, 16)
 		if err != nil {
-			return c, err
+			return nil, fmt.Errorf("colorx.ParseHex: parsing %q: %w", text, err)
 		}
 
-		if len(text) == 4 {
+		if len(trimmed) == 4 {
 			c.A = uint8(parsed & 0xF)
 			c.A |= c.A << 4
 			parsed >>= 4
@@ -75,12 +75,12 @@ func ParseHex(text string) (color.Color, error) {
 		c.R = uint8(parsed & 0xF)
 		c.R |= c.R << 4
 	case 6, 8:
-		parsed, err := strconv.ParseUint(text, 16, 32)
+		parsed, err := strconv.ParseUint(trimmed, 16, 32)
 		if err != nil {
-			return c, err
+			return nil, fmt.Errorf("colorx.ParseHex: parsing %q: %w", text, err)
 		}
 
-		if len(text) == 8 {
+		if len(trimmed) == 8 {
 			c.A = uint8(parsed & 0xFF)
 			parsed >>= 8
 		} else {
@@ -92,7 +92,7 @@ func ParseHex(text string) (color.Color, error) {
 		parsed >>= 8
 		c.R = uint8(parsed & 0xFF)
 	default:
-		return c, ErrInvalidLength
+		return nil, fmt.Errorf("colorx.ParseHex: parsing %q: %w", text, ErrInvalidLength)
 	}
 
 	if c.R == c.G && c.G == c.B && c.A == 0xFF {

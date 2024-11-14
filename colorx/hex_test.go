@@ -27,8 +27,9 @@ func TestParseHex(t *testing.T) {
 		{"missing prefix", args{"fff"}, color.White, require.NoError},
 		{"short alpha", args{"#f00e"}, color.NRGBA{R: 0xFF, A: 0xEE}, require.NoError},
 		{"long alpha", args{"#00ff00ab"}, color.NRGBA{G: 0xFF, A: 0xAB}, require.NoError},
-		{"too long", args{"#fffffffff"}, color.NRGBA{}, require.Error},
-		{"too short", args{"#fffff"}, color.NRGBA{}, require.Error},
+		{"too long", args{"#fffffffff"}, nil, require.Error},
+		{"too short", args{"#fffff"}, nil, require.Error},
+		{"invalid character", args{"#ffz"}, nil, require.Error},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
