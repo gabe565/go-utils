@@ -111,6 +111,8 @@ func FormatHex(c color.Color) string {
 	switch c := c.(type) {
 	case color.NRGBA:
 		r, g, b, a = c.R, c.G, c.B, c.A
+	case color.NRGBA64:
+		r, g, b, a = uint8(c.R&0xFF), uint8(c.G&0xFF), uint8(c.B&0xFF), uint8(c.A&0xFF)
 	default:
 		r32, g32, b32, a32 := c.RGBA()
 		r, g, b, a = uint8(r32&0xFF), uint8(g32&0xFF), uint8(b32&0xFF), uint8(a32&0xFF)
