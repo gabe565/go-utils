@@ -31,7 +31,11 @@ func buildVersion(version string) (string, string) {
 		if modified {
 			commit = "*" + commit
 		}
-		version += " (" + commit + ")"
+		if version == "" {
+			version = commit
+		} else {
+			version += " (" + commit + ")"
+		}
 	}
 	return version, commit
 }
