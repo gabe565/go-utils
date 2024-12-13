@@ -1,12 +1,20 @@
 package colorx
 
 import (
+	"encoding"
+	"fmt"
 	"image/color"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+func TestHex(t *testing.T) {
+	assert.Implements(t, (*encoding.TextMarshaler)(nil), &Hex{})
+	assert.Implements(t, (*encoding.TextUnmarshaler)(nil), &Hex{})
+	assert.Implements(t, (*fmt.Stringer)(nil), &Hex{})
+}
 
 func TestParseHex(t *testing.T) {
 	type args struct {

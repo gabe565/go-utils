@@ -12,6 +12,8 @@ import (
 )
 
 func TestUserAgentTransport(t *testing.T) {
+	assert.Implements(t, (*http.RoundTripper)(nil), &UserAgentTransport{})
+
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		_, _ = w.Write([]byte(r.Header.Get("User-Agent")))
 	}))

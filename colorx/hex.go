@@ -1,18 +1,11 @@
 package colorx
 
 import (
-	"encoding"
 	"errors"
 	"fmt"
 	"image/color"
 	"strconv"
 	"strings"
-)
-
-var (
-	_ encoding.TextMarshaler   = &Hex{}
-	_ encoding.TextUnmarshaler = &Hex{}
-	_ fmt.Stringer             = &Hex{}
 )
 
 // Hex is a helper struct that wraps a color and satisfies

@@ -2,8 +2,6 @@ package httpx
 
 import "net/http"
 
-var _ http.RoundTripper = &UserAgentTransport{}
-
 // NewUserAgentTransport creates a new UserAgentTransport, which wraps a given
 // http.RoundTripper and sets a custom User-Agent header for all HTTP requests.
 func NewUserAgentTransport(base http.RoundTripper, userAgent string) *UserAgentTransport {
