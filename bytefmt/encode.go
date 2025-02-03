@@ -99,7 +99,7 @@ func (b *Encoder) EncodeBinary(valInt int64) string { //nolint:dupl
 		multiple = " " + multiple
 	}
 	output := strconv.FormatFloat(valFloat, 'f', b.precision, 64)
-	if b.trimIntDecimal {
+	if b.trimIntDecimal && b.precision != 0 {
 		output = strings.TrimSuffix(output, ".00")
 	}
 	return output + multiple
@@ -146,7 +146,7 @@ func (b *Encoder) EncodeDecimal(valInt int64) string { //nolint:dupl
 		multiple = " " + multiple
 	}
 	output := strconv.FormatFloat(valFloat, 'f', b.precision, 64)
-	if b.trimIntDecimal {
+	if b.trimIntDecimal && b.precision != 0 {
 		output = strings.TrimSuffix(output, ".00")
 	}
 	return output + multiple
