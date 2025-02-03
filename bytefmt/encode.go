@@ -98,11 +98,11 @@ func (b *Encoder) EncodeBinary(valInt int64) string { //nolint:dupl
 	if !b.noSpace {
 		multiple = " " + multiple
 	}
-	output := strconv.FormatFloat(valFloat, 'f', b.precision, 64) + multiple
+	output := strconv.FormatFloat(valFloat, 'f', b.precision, 64)
 	if b.trimIntDecimal {
-		output = strings.Replace(output, ".00 ", " ", 1)
+		output = strings.TrimSuffix(output, ".00")
 	}
-	return output
+	return output + multiple
 }
 
 // EncodeDecimal formats bytes integer to human-readable string according to SI international system of units.
@@ -145,9 +145,9 @@ func (b *Encoder) EncodeDecimal(valInt int64) string { //nolint:dupl
 	if !b.noSpace {
 		multiple = " " + multiple
 	}
-	output := strconv.FormatFloat(valFloat, 'f', b.precision, 64) + multiple
+	output := strconv.FormatFloat(valFloat, 'f', b.precision, 64)
 	if b.trimIntDecimal {
-		output = strings.Replace(output, ".00 ", " ", 1)
+		output = strings.TrimSuffix(output, ".00")
 	}
-	return output
+	return output + multiple
 }
