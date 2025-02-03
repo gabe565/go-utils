@@ -6,17 +6,17 @@ import (
 )
 
 const (
-	DefaultPrecision   = 2
-	DefaultTrimIntZero = true
-	DefaultUseSpace    = true
+	DefaultPrecision      = 2
+	DefaultTrimIntDecimal = true
+	DefaultNoSpace        = false
 )
 
 // NewEncoder creates a new Encoder.
 func NewEncoder() *Encoder {
 	return &Encoder{
 		precision:      DefaultPrecision,
-		trimIntDecimal: DefaultTrimIntZero,
-		useSpace:       DefaultUseSpace,
+		trimIntDecimal: DefaultTrimIntDecimal,
+		noSpace:        DefaultNoSpace,
 	}
 }
 
@@ -24,7 +24,7 @@ func NewEncoder() *Encoder {
 type Encoder struct {
 	precision      int
 	trimIntDecimal bool
-	useSpace       bool
+	noSpace        bool
 }
 
 // SetPrecision instructs the encoder to include the given number of decimal places.
@@ -44,7 +44,7 @@ func (b *Encoder) SetTrimIntDecimal(trimIntZero bool) *Encoder {
 
 // SetUseSpace instructs the encoder to separate the value and suffix with a space.
 func (b *Encoder) SetUseSpace(useSpace bool) *Encoder {
-	b.useSpace = useSpace
+	b.noSpace = !useSpace
 	return b
 }
 
@@ -90,12 +90,12 @@ func (b *Encoder) EncodeBinary(valInt int64) string { //nolint:dupl
 		return "0"
 	default:
 		output := strconv.FormatInt(valInt, 10)
-		if b.useSpace {
+		if !b.noSpace {
 			return output + " B"
 		}
 		return output + "B"
 	}
-	if b.useSpace {
+	if !b.noSpace {
 		multiple = " " + multiple
 	}
 	output := strconv.FormatFloat(valFloat, 'f', b.precision, 64) + multiple
@@ -137,12 +137,12 @@ func (b *Encoder) EncodeDecimal(valInt int64) string { //nolint:dupl
 		return "0"
 	default:
 		output := strconv.FormatInt(valInt, 10)
-		if b.useSpace {
+		if !b.noSpace {
 			return output + " B"
 		}
 		return output + "B"
 	}
-	if b.useSpace {
+	if !b.noSpace {
 		multiple = " " + multiple
 	}
 	output := strconv.FormatFloat(valFloat, 'f', b.precision, 64) + multiple
