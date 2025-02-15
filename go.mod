@@ -5,7 +5,7 @@ go 1.23.2
 require (
 	github.com/creack/pty v1.1.24
 	github.com/fatih/color v1.18.0
-	github.com/goccy/go-yaml v1.15.17
+	github.com/goccy/go-yaml v1.15.23
 	github.com/mattn/go-isatty v0.0.20
 	github.com/spf13/cobra v1.8.1
 	github.com/stretchr/testify v1.10.0
