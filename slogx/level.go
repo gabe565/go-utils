@@ -77,9 +77,17 @@ func (l Level) String() string {
 	if l == LevelTrace {
 		return "trace"
 	}
-	return strings.ToLower(slog.Level(l).String())
+	return strings.ToLower(l.Level().String())
+}
+
+func (l Level) Level() slog.Level {
+	return slog.Level(l)
 }
 
 func Trace(msg string, args ...any) {
-	slog.Default().Log(context.Background(), slog.Level(LevelTrace), msg, args...)
+	LoggerTrace(slog.Default(), msg, args...)
+}
+
+func LoggerTrace(logger *slog.Logger, msg string, args ...any) {
+	logger.Log(context.Background(), LevelTrace.Level(), msg, args...)
 }
