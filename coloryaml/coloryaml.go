@@ -20,6 +20,7 @@ func Colorize(s string) string {
 // and the output will always end with a new line character.
 func WriteString(w io.Writer, s string) (int, error) {
 	if termx.IsColor(w) {
+		s = strings.TrimSuffix(s, "\n")
 		s = Colorize(s)
 	}
 
