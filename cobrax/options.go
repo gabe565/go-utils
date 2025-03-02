@@ -21,10 +21,6 @@ func WithVersion(version string) Option {
 		}
 		cmd.Annotations[VersionKey] = version
 		cmd.Version, cmd.Annotations[CommitKey] = buildVersion(version)
-		if cmd.Version == cmd.Annotations[CommitKey] {
-			cmd.SetVersionTemplate(`{{with .Name}}{{printf "%s " .}}{{end}}{{printf "commit %s" .Version}}
-`)
-		}
 		cmd.InitDefaultVersionFlag()
 	}
 }
