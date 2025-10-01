@@ -68,32 +68,32 @@ func (b *Encoder) EncodeBinary(valInt int64) string { //nolint:dupl
 	var multiple string
 	valFloat := float64(valInt)
 	switch {
-	case valInt >= EiB:
-		valFloat /= EiB
-		multiple = "EiB"
-	case valInt >= PiB:
-		valFloat /= PiB
-		multiple = "PiB"
-	case valInt >= TiB:
-		valFloat /= TiB
-		multiple = "TiB"
-	case valInt >= GiB:
-		valFloat /= GiB
-		multiple = "GiB"
-	case valInt >= MiB:
-		valFloat /= MiB
-		multiple = "MiB"
-	case valInt >= KiB:
-		valFloat /= KiB
-		multiple = "KiB"
 	case valInt == 0:
 		return "0"
-	default:
+	case valInt < KiB:
 		output := strconv.FormatInt(valInt, 10)
 		if !b.noSpace {
 			return output + " B"
 		}
 		return output + "B"
+	case valInt < MiB:
+		valFloat /= KiB
+		multiple = "KiB"
+	case valInt < GiB:
+		valFloat /= MiB
+		multiple = "MiB"
+	case valInt < TiB:
+		valFloat /= GiB
+		multiple = "GiB"
+	case valInt < PiB:
+		valFloat /= TiB
+		multiple = "TiB"
+	case valInt < EiB:
+		valFloat /= PiB
+		multiple = "PiB"
+	default:
+		valFloat /= EiB
+		multiple = "EiB"
 	}
 	if !b.noSpace {
 		multiple = " " + multiple
@@ -115,32 +115,32 @@ func (b *Encoder) EncodeDecimal(valInt int64) string { //nolint:dupl
 	var multiple string
 	valFloat := float64(valInt)
 	switch {
-	case valInt >= EB:
-		valFloat /= EB
-		multiple = "EB"
-	case valInt >= PB:
-		valFloat /= PB
-		multiple = "PB"
-	case valInt >= TB:
-		valFloat /= TB
-		multiple = "TB"
-	case valInt >= GB:
-		valFloat /= GB
-		multiple = "GB"
-	case valInt >= MB:
-		valFloat /= MB
-		multiple = "MB"
-	case valInt >= KB:
-		valFloat /= KB
-		multiple = "KB"
 	case valInt == 0:
 		return "0"
-	default:
+	case valInt < KB:
 		output := strconv.FormatInt(valInt, 10)
 		if !b.noSpace {
 			return output + " B"
 		}
 		return output + "B"
+	case valInt < MB:
+		valFloat /= KB
+		multiple = "KB"
+	case valInt < GB:
+		valFloat /= MB
+		multiple = "MB"
+	case valInt < TB:
+		valFloat /= GB
+		multiple = "GB"
+	case valInt < PB:
+		valFloat /= TB
+		multiple = "TB"
+	case valInt < EB:
+		valFloat /= PB
+		multiple = "PB"
+	default:
+		valFloat /= EB
+		multiple = "EB"
 	}
 	if !b.noSpace {
 		multiple = " " + multiple
