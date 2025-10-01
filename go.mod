@@ -8,7 +8,7 @@ require (
 	github.com/goccy/go-yaml v1.18.0
 	github.com/mattn/go-isatty v0.0.20
 	github.com/spf13/cobra v1.9.1
-	github.com/spf13/pflag v1.0.6
+	github.com/spf13/pflag v1.0.10
 	github.com/stretchr/testify v1.10.0
 )
 
