@@ -30,7 +30,9 @@ const (
 //
 // Deprecated: As of Cobra v1.9.0, the default completion command is always added.
 func RegisterCompletionFlag(cmd *cobra.Command) error {
-	cmd.Flags().String(FlagCompletion, "", "Generate the autocompletion script for the specified shell (one of bash, zsh, fish, powershell)")
+	cmd.Flags().String(FlagCompletion, "",
+		"Generate the autocompletion script for the specified shell (one of bash, zsh, fish, powershell)",
+	)
 
 	if err := cmd.RegisterFlagCompletionFunc(FlagCompletion, func(_ *cobra.Command, _ []string, _ string) ([]string, cobra.ShellCompDirective) {
 		return []string{string(Bash), string(Zsh), string(Fish), string(PowerShell)}, cobra.ShellCompDirectiveNoFileComp

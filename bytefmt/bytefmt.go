@@ -1,6 +1,6 @@
 package bytefmt
 
-// Binary units (IEC 60027)
+// Binary units (IEC 60027).
 const (
 	_ = 1 << (10 * iota)
 	KiB
@@ -11,7 +11,7 @@ const (
 	EiB
 )
 
-// Decimal units (SI international system of units)
+// Decimal units (SI international system of units).
 const (
 	KB = 1000
 	MB = KB * 1000

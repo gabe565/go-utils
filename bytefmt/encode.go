@@ -52,8 +52,8 @@ func (b *Encoder) SetUseSpace(useSpace bool) *Encoder {
 //
 // For example, 31323 bytes will return "30.59 KB".
 //
-// The smallest supported value is "1 B", so precision will be ignored.
-// below "1 KiB" or "1 KB"
+// The smallest supported value is "1 B", so precision will be ignored
+// below "1 KiB" or "1 KB".
 func (b *Encoder) Encode(val int64) string {
 	return b.EncodeBinary(val)
 }

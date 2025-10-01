@@ -40,19 +40,19 @@ func buildVersion(version string) (string, string) {
 	return version, commit
 }
 
-// GetVersion gets the raw version set by WithVersion
+// GetVersion gets the raw version set by WithVersion.
 func GetVersion(cmd *cobra.Command) string {
 	return cmd.Root().Annotations[VersionKey]
 }
 
-// GetCommit gets the commit set by WithVersion
+// GetCommit gets the commit set by WithVersion.
 func GetCommit(cmd *cobra.Command) string {
 	return cmd.Root().Annotations[CommitKey]
 }
 
 // BuildUserAgent generates a value to be used with httpx.UserAgentTransport.
 //
-// Example output: `example/v1.0.0-deadbeef (linux/amd64)`
+// Example output: `example/v1.0.0-deadbeef (linux/amd64)`.
 func BuildUserAgent(cmd *cobra.Command) string {
 	root := cmd.Root()
 	ua := root.Name()

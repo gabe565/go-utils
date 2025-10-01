@@ -29,7 +29,12 @@ func TestByteEncoder_EncodeBinary(t *testing.T) {
 		{"no space", args{value: 31323}, NewEncoder().SetUseSpace(false), "30.59KiB"},
 		{"decimal not trimmed", args{value: 31323}, NewEncoder().SetTrimIntDecimal(true), "30.59 KiB"},
 		{"int decimal trimmed", args{value: 1024}, NewEncoder().SetTrimIntDecimal(true), "1 KiB"},
-		{"int decimal trimmed without space", args{value: 1024}, NewEncoder().SetUseSpace(false).SetTrimIntDecimal(true), "1KiB"},
+		{
+			"int decimal trimmed without space",
+			args{value: 1024},
+			NewEncoder().SetUseSpace(false).SetTrimIntDecimal(true),
+			"1KiB",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -63,7 +68,12 @@ func TestByteEncoder_EncodeDecimal(t *testing.T) {
 		{"no space", args{value: 31323}, NewEncoder().SetUseSpace(false), "31.32KB"},
 		{"decimal not trimmed", args{value: 31323}, NewEncoder().SetTrimIntDecimal(true), "31.32 KB"},
 		{"int decimal trimmed", args{value: 1000}, NewEncoder().SetTrimIntDecimal(true), "1 KB"},
-		{"int decimal trimmed without space", args{value: 1000}, NewEncoder().SetUseSpace(false).SetTrimIntDecimal(true), "1KB"},
+		{
+			"int decimal trimmed without space",
+			args{value: 1000},
+			NewEncoder().SetUseSpace(false).SetTrimIntDecimal(true),
+			"1KB",
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
