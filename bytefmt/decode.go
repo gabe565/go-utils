@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
-	"unicode"
 )
 
 // NewDecoder creates a new Decoder.
@@ -18,7 +17,7 @@ type Decoder struct{}
 
 func split(text string) (float64, string, error) {
 	suffix := strings.TrimLeftFunc(text, func(r rune) bool {
-		return unicode.IsDigit(r) || r == ' ' || r == '-' || r == '.'
+		return ('0' <= r && r <= '9') || r == ' ' || r == '-' || r == '.'
 	})
 
 	bytesStr := strings.TrimSuffix(text[:len(text)-len(suffix)], " ")
