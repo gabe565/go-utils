@@ -128,6 +128,7 @@ func Test_splitBytes(t *testing.T) {
 		{"1MiB", args{"1MiB"}, 1, "MiB", require.NoError},
 		{"1 MB", args{"1 MB"}, 1, "MB", require.NoError},
 		{"1MB", args{"1MB"}, 1, "MB", require.NoError},
+		{"1  MiB", args{"1  MiB"}, 1, "MiB", require.NoError},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

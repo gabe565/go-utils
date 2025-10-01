@@ -20,7 +20,7 @@ func split(text string) (float64, string, error) {
 		return ('0' <= r && r <= '9') || r == ' ' || r == '-' || r == '.'
 	})
 
-	bytesStr := strings.TrimSuffix(text[:len(text)-len(suffix)], " ")
+	bytesStr := strings.TrimSpace(text[:len(text)-len(suffix)])
 	bytes, err := strconv.ParseFloat(bytesStr, 64)
 	if err != nil {
 		return 0, "", err
