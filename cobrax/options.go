@@ -1,6 +1,9 @@
 package cobrax
 
-import "github.com/spf13/cobra"
+import (
+	"gabe565.com/utils/versionx"
+	"github.com/spf13/cobra"
+)
 
 type Option func(cmd *cobra.Command)
 
@@ -19,8 +22,10 @@ func WithVersion(version string) Option {
 		if cmd.Annotations == nil {
 			cmd.Annotations = make(map[string]string)
 		}
-		cmd.Annotations[VersionKey] = version
-		cmd.Version, cmd.Annotations[CommitKey] = buildVersion(version)
+		v := versionx.New(version)
+		cmd.Annotations[VersionKey] = v.Version
+		cmd.Annotations[CommitKey] = v.Commit.Short()
+		cmd.Version = v.String()
 		cmd.InitDefaultVersionFlag()
 	}
 }
