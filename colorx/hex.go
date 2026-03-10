@@ -38,9 +38,7 @@ func (h *Hex) String() string {
 
 var ErrInvalidLength = errors.New("invalid length")
 
-// ParseHex parses the given hex code as a color.NRGBA
-//
-//nolint:gosec
+// ParseHex parses the given hex code as a color.NRGBA.
 func ParseHex(text string) (color.Color, error) {
 	var c color.NRGBA
 	trimmed := strings.TrimPrefix(text, "#")
@@ -96,9 +94,7 @@ func ParseHex(text string) (color.Color, error) {
 	return c, nil
 }
 
-// FormatHex formats the given color.Color as a hex code
-//
-//nolint:gosec
+// FormatHex formats the given color.Color as a hex code.
 func FormatHex(c color.Color) string {
 	var r, g, b, a uint8
 	switch c := c.(type) {

@@ -34,9 +34,17 @@ func RegisterCompletionFlag(cmd *cobra.Command) error {
 		"Generate the autocompletion script for the specified shell (one of bash, zsh, fish, powershell)",
 	)
 
-	if err := cmd.RegisterFlagCompletionFunc(FlagCompletion, func(_ *cobra.Command, _ []string, _ string) ([]string, cobra.ShellCompDirective) {
-		return []string{string(Bash), string(Zsh), string(Fish), string(PowerShell)}, cobra.ShellCompDirectiveNoFileComp
-	}); err != nil {
+	if err := cmd.RegisterFlagCompletionFunc(
+		FlagCompletion,
+		func(_ *cobra.Command, _ []string, _ string) ([]string, cobra.ShellCompDirective) {
+			return []string{
+				string(Bash),
+				string(Zsh),
+				string(Fish),
+				string(PowerShell),
+			}, cobra.ShellCompDirectiveNoFileComp
+		},
+	); err != nil {
 		return err
 	}
 
