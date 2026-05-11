@@ -3,8 +3,15 @@ package versionx
 import "runtime/debug"
 
 func CommitFromVCS() Commit {
-	var commit Commit
 	if info, ok := debug.ReadBuildInfo(); ok {
+		return commitFromVCS(info)
+	}
+	return Commit{}
+}
+
+func commitFromVCS(info *debug.BuildInfo) Commit {
+	var commit Commit
+	if info != nil {
 		for _, setting := range info.Settings {
 			switch setting.Key {
 			case "vcs.revision":

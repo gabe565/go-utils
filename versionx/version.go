@@ -1,9 +1,15 @@
 package versionx
 
+import "runtime/debug"
+
 func New(version string) Version {
+	info, ok := debug.ReadBuildInfo()
+	if ok && version == "" {
+		version = info.Main.Version
+	}
 	return Version{
 		Version: version,
-		Commit:  CommitFromVCS(),
+		Commit:  commitFromVCS(info),
 	}
 }
 
